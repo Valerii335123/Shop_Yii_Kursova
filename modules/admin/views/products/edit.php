@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = 'Редактирование данных о �
     }
     ?>
 
+
     <?php
     echo Html::a('Список атрибутов товара', ['/admin/products/list', 'id' => $model->product_id], ['class' => 'btn btn-success']);
     
