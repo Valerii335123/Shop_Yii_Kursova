@@ -22,23 +22,26 @@ class UserService
     {
         $user = new Users();
         $user->registration($registration);
-      //  var_dump($user);
-       $this->userRepository->save($user);
-       // $user->save();
+        //  var_dump($user);
+        $this->userRepository->save($user);
+        // $user->save();
     }
 
     public function login(LoginForm $loginForm)
     {
-        $user = $this->userRepository->findByLogin($loginForm->login);
+        $user = $this->userRepository->findByUserName($loginForm->username);
 
-        if (!$user || !$user->validatePassword($loginForm->pass)) {
+        if (!$user || !$user->validatePassword($loginForm->password)) {
             throw new \Exception('Undefined login or pass');
 
-        } elseif (!$user->active) {
+        } elseif (!$user->is_active) {
             throw new \Exception('User is banned');
 
         } else {
-            return Yii::$app->user->login($user, 3600 * 24);
+
+             Yii::$app->user->login($user, $loginForm->rememberMe ? 3600 * 24 : 1800);
+            print_r(Yii::$app->user->id);
+             return true;
         }
     }
 

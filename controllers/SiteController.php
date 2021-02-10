@@ -8,7 +8,7 @@ use Yii;
 use app\components\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\models\forms\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
 
@@ -46,18 +46,6 @@ class SiteController extends Controller
         ];
     }
 
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
 
     public function actionIndex()
     {
@@ -71,8 +59,12 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($this->userService->login($model)) {
+                //print_r(Yii::$app->user-id);
+                return $this->goHome();
+            }
+
         }
         return $this->render('login', ['model' => $model]);
     }

@@ -80,7 +80,15 @@ $this->registerJs("
 
         <?php foreach ($products as $product): ?>
             <div class="product">
-                <?= Html::a('<img src="http://dummyimage.com/150x100/fafafa/3ea1ec" alt="..." class="img-thumbnail" style="float: left">', ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?>
+                <?php
+                if(isset($product['product_image_url']))
+                {
+                    $image=$product['product_image_url'];
+                }
+                else $image="http://dummyimage.com/150x100/fafafa/3ea1ec";
+                print_r($image);
+                ?>
+                <?= Html::a("<img src=$image alt='...' class='img-thumbnail' style='float: left'>", ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?>
                 <div>Название товара:
                     <b> <?= Html::a($product['title'], ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?> </b>
                 </div>

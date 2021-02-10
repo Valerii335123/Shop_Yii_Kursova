@@ -16,7 +16,7 @@ class Users extends ActiveRecord implements IdentityInterface
     const ROLE_USER=2;
 
     public static function tableName() {
-        return 'user';
+        return 'users';
     }
 
     public function rules()
@@ -27,7 +27,7 @@ class Users extends ActiveRecord implements IdentityInterface
                 'is_active',
                 'role',
                 'password'
-                ], 'required']
+                ], 'safe']
 
         ];
     }

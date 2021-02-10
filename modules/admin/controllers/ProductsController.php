@@ -47,6 +47,8 @@ class ProductsController extends Controller
             if ($productParams['status'] == Products::HIDDEN) {
                 Categories::setCategoriesCounters($productParams['category_id'], 0, 1);
             }
+
+
             return $this->redirect('/admin/products/edit/' . $products->product_id);
         } else {
             return $this->render('add', ['model' => $products, 'type' => 'add']);

@@ -15,14 +15,14 @@ class UserRepository
         }
     }
 
-    public function findByLogin($login)
+    public function findByUserName($login)
     {
-        return User::findOne(['login' => $login]);
+        return Users::findOne(['username' => $login]);
     }
 
     public function getById($id)
     {
-        $user = User::findOne($id);
+        $user = Users::findOne($id);
         if ($user == null) {
             throw new \DomainException('User is not found');
         }

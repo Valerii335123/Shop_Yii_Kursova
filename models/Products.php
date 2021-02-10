@@ -73,7 +73,7 @@ class Products extends ActiveRecord
 
     public function getCreatedBy()
     {
-        return $this->hasOne(Users::className(), ['user_id' => 'created_by']);
+        return $this->hasOne(Users::className(), ['user_id' => 'created_by'])->one();
     }
 
     public function getUpdatedBy()
@@ -127,6 +127,11 @@ class Products extends ActiveRecord
         } else {
             return self::productStatusList()[$status][0];
         }
+    }
+
+    public function getImages()
+    {
+        return $this->hasOne(ProductImages::className(), ['product_id' => 'product_id']);
     }
     
 }

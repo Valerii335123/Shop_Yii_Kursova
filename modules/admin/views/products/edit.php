@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = 'Редактирование данных о �
 
     <?php
     echo Html::a('Список атрибутов товара', ['/admin/products/list', 'id' => $model->product_id], ['class' => 'btn btn-success']);
-    
+
+    echo Html::a('Добавити фото ', ['/admin/product-images/create', 'product_id' => $model->product_id], ['class' => 'btn btn-success']);
+
     $form = ActiveForm::begin([
         'id' => 'login-form-horizontal',
         'type' => ActiveForm::TYPE_HORIZONTAL,
@@ -53,7 +55,8 @@ $this->params['breadcrumbs'][] = 'Редактирование данных о �
     <?= $form->field($model, 'description')->textInput() ?>
     <?= $form->field($model, 'price')->textInput() ?>
     <?= $form->field($model, 'special_price')->textInput() ?>
-    <?= $form->field($model->createdBy, 'username')->staticInput(); ?>
+
+    <?= $form->field($model->getCreatedBy(), 'username')->staticInput(); ?>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">

@@ -20,6 +20,7 @@ $dataProvider = new \yii\data\ActiveDataProvider([
                 </div>
             </div>
             <div class="col-lg-8">
+
                 <?php
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $dataProvider,
