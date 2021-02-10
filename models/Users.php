@@ -2,9 +2,10 @@
 
 namespace app\models;
 
+use app\models\forms\Registration;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
+use Yii;
 class Users extends ActiveRecord implements IdentityInterface
 {
 
@@ -15,16 +16,18 @@ class Users extends ActiveRecord implements IdentityInterface
     const ROLE_USER=2;
 
     public static function tableName() {
-        return 'users';
+        return 'user';
     }
 
     public function rules()
     {
         return [
-            [['user_id',
+            [['id',
                 'username',
                 'is_active',
-                'role'], 'required']
+                'role',
+                'password'
+                ], 'required']
 
         ];
     }
@@ -49,6 +52,18 @@ class Users extends ActiveRecord implements IdentityInterface
         return static::findOne(['username' => $username]);
     }
 
+    public function registration(Registration $registration)
+    {
+        $this->username = $registration->login;
+        $this->password = Yii::$app->security->generatePasswordHash($registration->pass);
+       // $this->role=self::ROLE_USER;
+        //$this->first_name='';
+        //$this->last_name='';
+        //$this->is_active=self::ACTIVE;
+        //$this->created_date=time();
+        //$this->email='';
+
+    }
 
     public function validatePassword($password)
     {

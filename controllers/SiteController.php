@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\forms\Registration;
+use app\models\service\UserService;
 use Yii;
 use app\components\Controller;
 use yii\filters\AccessControl;
@@ -12,6 +14,15 @@ use app\models\EntryForm;
 
 class SiteController extends Controller
 {
+
+    private $userService;
+
+    public function __construct($id, $module, UserService $service, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->userService = $service;
+    }
+
     public function behaviors()
     {
         return [
@@ -89,6 +100,22 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionRegistration()
+    {
+        $registration = new Registration();
+       // var_dump($registration);
+        if ($registration->load(Yii::$app->request->post()) && $registration->validate()) {
+           // var_dump($registration);
+            $this->userService->registration($registration);
+
+            return $this->goHome();
+        }
+
+        return $this->render('registration', [
+            'model' => $registration
+        ]);
     }
 
 }
