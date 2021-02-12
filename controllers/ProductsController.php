@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ProductImages;
 use Yii;
 use app\components\Controller;
 use app\models\Categories;
@@ -37,14 +38,18 @@ class ProductsController extends Controller
             ->bindValue(':category_id', $product['category_id'])
             ->queryAll();
 
+
+        $productImage=ProductImages::find($product['prosuct_id'])->one();
+
         return $this->render('index', [
                 'product' => $product,
                 'fullPath' => $fullPath,
                 'attributes' => $attributes,
+                'url'=>$productImage->product_image_url,
             ]
         );
     }
-    
+
     public function actionAddproduct()
     {
         if (Yii::$app->request->isAjax) {

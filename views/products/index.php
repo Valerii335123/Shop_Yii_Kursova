@@ -23,8 +23,12 @@ $this->registerJs("
     }", \yii\web\View::POS_END);
 ?>
 
+
+
 <br>
-<img src="http://dummyimage.com/450x300/fafafa/3ea1ec" alt="..." class="img-thumbnail" style="float: left">
+<?= Html::img("/$url", ['alt' => 'pic not found','style' => 'width:150px;height: 100px'])?>
+<?= Html::img("/$url" ,['alt'=>'...', 'class'=>"img-thumbnail", 'style'=>"float: left;width:450px;height: 300px"])?>
+
 <div> Название товара:
     <b> <?= Html::encode($product['title']) ?> </b>
 </div>

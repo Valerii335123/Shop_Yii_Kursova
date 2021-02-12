@@ -83,19 +83,22 @@ $this->registerJs("
                 <?php
                 if(isset($product['product_image_url']))
                 {
-                    $image=$product['product_image_url'];
+                    $url=$product['product_image_url'];
+                    $image="/$url";
                 }
                 else $image="http://dummyimage.com/150x100/fafafa/3ea1ec";
-                print_r($image);
+
                 ?>
-                <?= Html::a("<img src=$image alt='...' class='img-thumbnail' style='float: left'>", ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?>
+
+                <?//Html::a("<img src=$image alt='...' class='img-thumbnail' style='float: left'>", ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?>
+                <?= Html::img($image, ['alt' => 'pic not found','style' => 'width:150px;height: 100px'])?>
                 <div>Название товара:
                     <b> <?= Html::a($product['title'], ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?> </b>
                 </div>
                 <div>Бренд:
                     <?= Html::encode($product['brand_name']) ?>
                 </div>
-                <div>Описание:
+                <div>Описание:s
                     <?= Html::encode($product['description']) ?>
                 </div>
                 <div>
