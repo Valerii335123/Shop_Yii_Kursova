@@ -61,7 +61,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($this->userService->login($model)) {
-                //print_r(Yii::$app->user-id);
+
                 return $this->goHome();
             }
 

@@ -40,7 +40,7 @@ class UserService
         } else {
 
              Yii::$app->user->login($user, $loginForm->rememberMe ? 3600 * 24 : 1800);
-            print_r(Yii::$app->user->id);
+          //  print_r(Yii::$app->user->id);
              return true;
         }
     }
