@@ -17,7 +17,7 @@ class ProductsController extends Controller
     public function actionIndex()
     {
         $query = Products::find()
-            ->with(['brand', 'category']);
+            ->with(['brand', 'category','statistic']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pageSize' => 10],
@@ -31,6 +31,25 @@ class ProductsController extends Controller
             'desc' => ['product_categories_list.name' => SORT_DESC],
         ];
         return $this->render('index', ['dataProvider' => $dataProvider]);
+    }
+
+    public function actionStatistic()
+    {
+        $query = Products::find()
+            ->with(['brand', 'category','statistic']);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => ['pageSize' => 10],
+        ]);
+        $dataProvider->sort->attributes['brand.brand_name'] = [
+            'asc' => ['product_brands.brand_name' => SORT_ASC],
+            'desc' => ['product_brands.brand_name' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['category.name'] = [
+            'asc' => ['product_categories_list.name' => SORT_ASC],
+            'desc' => ['product_categories_list.name' => SORT_DESC],
+        ];
+        return $this->render('statistic', ['dataProvider' => $dataProvider]);
     }
 
     public function actionAdd()

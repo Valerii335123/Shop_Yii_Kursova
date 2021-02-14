@@ -86,6 +86,11 @@ class Products extends ActiveRecord
         return $this->hasOne(Brands::className(), ['brand_id' => 'brand_id']);
     }
 
+    public  function getStatistic()
+    {
+    return $this->hasOne(Productstatistiv::className(),['product_id'=>'product_id']);
+    }
+
     public function getCategory()
     {
         return $this->hasOne(Categories::className(), ['category_id' => 'category_id']);

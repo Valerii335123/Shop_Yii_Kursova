@@ -17,8 +17,8 @@ echo GridView::widget([
         [
             'content' =>
                 Html::a('<i class="glyphicon glyphicon-plus"></i>', ['add'], ['class' => 'btn btn-success']) . ' ' .
-                Html::a('<i class="glyphicon glyphicon-stats"></i>', ['statistic'], ['class' => 'btn btn-success']) . ' ' .
-                Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
+                Html::a('<i class="glyphicon glyphicon-th-large"></i>', ['index'], ['class' => 'btn btn-success']) . ' ' .
+                Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['statistic'], [
                     'data-pjax' => 10,
                     'class' => 'btn btn-default',
                     'title' => 'Reset Grid'
@@ -42,11 +42,9 @@ echo GridView::widget([
         'title',
         'brand.brand_name',
         'category.name',
-        'price',
-        'special_price',
-        'time_created:datetime',
-        'time_updated:datetime',
 
+
+        'statistic.amount',
         [
             'attribute' => 'status',
             'filter' => Products::getProductStatuses(),

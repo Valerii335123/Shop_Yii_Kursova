@@ -87,12 +87,6 @@ $this->registerJsFile('/js/cart.js', ['position' => \yii\web\View::POS_END]);
     <?= $form->field($order, 'total_sum')->hiddenInput(['value' => $total_sum])->label(false) ?>
 
     <?= $form->field($order, 'client_comment')->textarea(['maxlength' => 255]) ?>
-    
-    <?=
-    $form->field($order, 'verifyCode')->widget(Captcha::className(), [
-        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-    ])
-    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Отправить заказ', ['class' => 'btn btn-primary']) ?>

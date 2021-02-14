@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\ProductImages;
+
+use app\models\service\StatisticService;
 use Yii;
 use app\components\Controller;
 use app\models\Categories;
@@ -11,6 +13,16 @@ use app\models\Cart;
 
 class ProductsController extends Controller
 {
+
+    private $statistic;
+
+    public function __construct($id, $module,StatisticService $service, $config = [])
+    {
+        $this->statistic = $service;
+        parent::__construct($id, $module, $config);
+
+    }
+
 
     public function actionIndex()
     {
@@ -52,12 +64,15 @@ class ProductsController extends Controller
 
     public function actionAddproduct()
     {
+        $this->statistic->addPocket((int)Yii::$app->request->post('id'));
         if (Yii::$app->request->isAjax) {
             Cart::addProduct((int)Yii::$app->request->post('id'));
+
             echo json_encode(count(Yii::$app->session->get('productsarray')));
         } else {
-            echo json_encode('nok');
+               echo json_encode('nok');
         }
+
     }
 
 }
