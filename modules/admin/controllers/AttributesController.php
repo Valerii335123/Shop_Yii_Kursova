@@ -33,8 +33,8 @@ class AttributesController extends Controller
     {
         if (!empty($id)) {
             $attributes = Attributes::find()
-                    ->where(['attribute_id' => $id])
-                    ->one();
+                ->where(['attribute_id' => $id])
+                ->one();
 
             if ($attributes->load(Yii::$app->request->post()) && $attributes->validate()) {
                 $results = $attributes->save();
@@ -57,10 +57,10 @@ class AttributesController extends Controller
         $attribute = (new AttributesCategories)->loadDefaultValues();
 
         $attributes = AttributesCategories::find()
-                ->joinWith('attributeinfo')
-                ->where(['category_id' => $id])
-                ->orderBy('product_attributes_categories.order')
-                ->all();
+            ->joinWith('attributeinfo')
+            ->where(['category_id' => $id])
+            ->orderBy('product_attributes_categories.order')
+            ->all();
 
         if ($attribute->load(Yii::$app->request->post()) && $attribute->validate()) {
             $res = $attribute->save();

@@ -62,13 +62,11 @@ class CatalogController extends Controller
             ->select('*')
             ->from('products')
             ->leftJoin('product_brands', 'product_brands.brand_id = products.brand_id')
-            ->LeftJoin('product_images','product_images.product_id=products.product_id')
+            ->LeftJoin('product_images', 'product_images.product_id=products.product_id')
             ->where([
                 'category_id' => $_GET['id'], // для данной категории
                 'status' => Products::VISIBLE,
             ]);
-
-
 
 
         // если отправлен post из фильтра, в запрос добавляется еще одно условие:

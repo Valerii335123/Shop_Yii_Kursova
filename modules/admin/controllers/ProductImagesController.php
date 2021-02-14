@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+
 /**
  * ProductImagesController implements the CRUD actions for ProductImages model.
  */
@@ -65,14 +66,14 @@ class ProductImagesController extends Controller
     public function actionCreate($product_id)
     {
         $model = new ProductImages();
-            $model->product_id=$product_id;
-        if ($model->load(Yii::$app->request->post())  ) {
-            $nameImage=uniqid(time());
+        $model->product_id = $product_id;
+        if ($model->load(Yii::$app->request->post())) {
+            $nameImage = uniqid(time());
             $model->product_image_url = (UploadedFile::getInstance($model, 'product_image_url'));
-            $model->product_image_url->saveAs('uploads/'.$nameImage.'.'. $model->product_image_url->extension);
-            $model->product_image_url='uploads/'.$nameImage.'.'. $model->product_image_url->extension;
-            if($model->save())
-            return $this->redirect(['view', 'id' => $model->image_id]);
+            $model->product_image_url->saveAs('uploads/' . $nameImage . '.' . $model->product_image_url->extension);
+            $model->product_image_url = 'uploads/' . $nameImage . '.' . $model->product_image_url->extension;
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->image_id]);
         }
 
         return $this->render('create', [

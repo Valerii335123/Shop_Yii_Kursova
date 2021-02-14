@@ -24,9 +24,9 @@ class ImagesController extends Controller
 
                 if ($files->upload()) {
 
-    //                if ($files->load(Yii::$app->request->post()) && $files->validate()) {
-    //                    $files->save();
-    //                }
+                    //                if ($files->load(Yii::$app->request->post()) && $files->validate()) {
+                    //                    $files->save();
+                    //                }
                     // file is uploaded successfully
                     return;
                 }

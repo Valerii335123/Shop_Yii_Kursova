@@ -10,7 +10,8 @@ use yii\web\UploadedFile;
 
 class ArticlesController extends Controller
 {
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $articles = new Articles(['scenario' => Articles::SCENARIO_FILTER]);
         return $this->render('index', [
             'dataProvider' => $articles->search(Yii::$app->request->get()),
@@ -18,7 +19,8 @@ class ArticlesController extends Controller
         ]);
     }
 
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $articles = (new Articles)->loadDefaultValues();
 
         if ($articles->load(Yii::$app->request->post()) && $articles->validate()) {
@@ -57,13 +59,15 @@ class ArticlesController extends Controller
         }
     }
 
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         if (Articles::deleteAll(['article_id' => $id])) {
             return $this->redirect('/admin/articles');
         }
     }
 
-    public function actionMultipleDelete() {
+    public function actionMultipleDelete()
+    {
         if (Articles::deleteAll(['article_id' => Yii::$app->request->post('ids')])) {
             echo json_encode('ok');
         } else {

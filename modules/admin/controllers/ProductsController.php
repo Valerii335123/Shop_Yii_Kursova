@@ -64,7 +64,7 @@ class ProductsController extends Controller
             $results = $products->save();
             $productParams = ArrayHelper::toArray($products);
 
-            if ((int) $productParams['status'] != (int) $productOldParams['status'] && (int) $productParams['category_id'] != (int) $productOldParams['category_id']) {
+            if ((int)$productParams['status'] != (int)$productOldParams['status'] && (int)$productParams['category_id'] != (int)$productOldParams['category_id']) {
                 AttributesList::deleteAll(['product_id' => $id]);
                 if ($productParams['status'] == Products::VISIBLE) {
                     Categories::setCategoriesCounters($productOldParams['category_id'], 0, -1);
@@ -75,11 +75,11 @@ class ProductsController extends Controller
                     Categories::setCategoriesCounters($productParams['category_id'], 0, 1);
                 }
             } else {
-                if ($productParams['status'] == Products::VISIBLE && (int) $productParams['status'] != (int) $productOldParams['status'] && (int) $productParams['category_id'] = (int) $productOldParams['category_id']) {
+                if ($productParams['status'] == Products::VISIBLE && (int)$productParams['status'] != (int)$productOldParams['status'] && (int)$productParams['category_id'] = (int)$productOldParams['category_id']) {
                     Categories::setCategoriesCounters($productParams['category_id'], 1, -1);
-                } elseif ($productParams['status'] == Products::HIDDEN && (int) $productParams['status'] != (int) $productOldParams['status'] && (int) $productParams['category_id'] = (int) $productOldParams['category_id']) {
+                } elseif ($productParams['status'] == Products::HIDDEN && (int)$productParams['status'] != (int)$productOldParams['status'] && (int)$productParams['category_id'] = (int)$productOldParams['category_id']) {
                     Categories::setCategoriesCounters($productParams['category_id'], -1, 1);
-                } elseif ($productParams['status'] == Products::VISIBLE && (int) $productParams['status'] = (int) $productOldParams['status'] && (int) $productParams['category_id'] != (int) $productOldParams['category_id']) {
+                } elseif ($productParams['status'] == Products::VISIBLE && (int)$productParams['status'] = (int)$productOldParams['status'] && (int)$productParams['category_id'] != (int)$productOldParams['category_id']) {
                     AttributesList::deleteAll(['product_id' => $id]);
                     Categories::setCategoriesCounters($productOldParams['category_id'], -1, 0);
                     Categories::setCategoriesCounters($productParams['category_id'], 1, 0);
@@ -210,5 +210,5 @@ class ProductsController extends Controller
             echo json_encode('nok');
         }
     }
-    
+
 }

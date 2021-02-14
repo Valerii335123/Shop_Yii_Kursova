@@ -9,7 +9,8 @@ use app\models\News;
 class NewsController extends Controller
 {
 
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $news = new News(['scenario' => News::SCENARIO_FILTER]);
         return $this->render('index', [
             'dataProvider' => $news->search(Yii::$app->request->get()),
@@ -17,7 +18,8 @@ class NewsController extends Controller
         ]);
     }
 
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $news = (new News)->loadDefaultValues();
 
         if ($news->load(Yii::$app->request->post()) && $news->validate()) {
@@ -43,12 +45,14 @@ class NewsController extends Controller
         }
     }
 
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         if (News::deleteAll(['news_id' => $id]))
             return $this->redirect('/admin/news');
     }
 
-    public function actionMultipleDelete() {
+    public function actionMultipleDelete()
+    {
         if (News::deleteAll(['news_id' => Yii::$app->request->post('ids')])) {
             echo json_encode('ok');
         } else {

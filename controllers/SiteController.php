@@ -97,9 +97,9 @@ class SiteController extends Controller
     public function actionRegistration()
     {
         $registration = new Registration();
-       // var_dump($registration);
+        // var_dump($registration);
         if ($registration->load(Yii::$app->request->post()) && $registration->validate()) {
-           // var_dump($registration);
+            // var_dump($registration);
             $this->userService->registration($registration);
 
             return $this->goHome();

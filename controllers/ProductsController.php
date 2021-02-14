@@ -39,13 +39,13 @@ class ProductsController extends Controller
             ->queryAll();
 
 
-        $productImage=ProductImages::find($product['prosuct_id'])->one();
+        $productImage = ProductImages::find($product['prosuct_id'])->one();
 
         return $this->render('index', [
                 'product' => $product,
                 'fullPath' => $fullPath,
                 'attributes' => $attributes,
-                'url'=>$productImage->product_image_url,
+                'url' => $productImage->product_image_url,
             ]
         );
     }
@@ -53,7 +53,7 @@ class ProductsController extends Controller
     public function actionAddproduct()
     {
         if (Yii::$app->request->isAjax) {
-            Cart::addProduct((int) Yii::$app->request->post('id'));
+            Cart::addProduct((int)Yii::$app->request->post('id'));
             echo json_encode(count(Yii::$app->session->get('productsarray')));
         } else {
             echo json_encode('nok');

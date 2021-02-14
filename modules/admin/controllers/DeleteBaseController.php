@@ -78,7 +78,8 @@ class BaseController extends Controller
         return $migrations;
     }
 
-    public function getAllMigrations($limit, $start) {
+    public function getAllMigrations($limit, $start)
+    {
         $migrations = [];
         $migrationPath = Yii::getAlias($this->migrationPath);
 
@@ -107,7 +108,8 @@ class BaseController extends Controller
         return $migrations;
     }
 
-    public function hasSmth($class) {
+    public function hasSmth($class)
+    {
         $migrationPath = Yii::getAlias($this->migrationPath);
         require_once $migrationPath . DIRECTORY_SEPARATOR . $class . '.php';
         $refl = new \ReflectionClass($class);
@@ -118,7 +120,8 @@ class BaseController extends Controller
         return $has;
     }
 
-    protected function hasUp($class) {
+    protected function hasUp($class)
+    {
         $migrationPath = Yii::getAlias($this->migrationPath);
 //        $path = $migrationPath . DIRECTORY_SEPARATOR . $class;
 
