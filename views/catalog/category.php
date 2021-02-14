@@ -29,15 +29,15 @@ $this->registerJs("
     <div>
         <?php
         $form = ActiveForm::begin([
-              'id' => 'active-form',
-              'options' => [
-                  'class' => 'form-horizontal',
-                  'enctype' => 'multipart/form-data',
-                  'name' => 'brandsfilter',
-              ],
-              'fieldConfig' => [
-                  'template' => "{input}\n{label}\n{hint}\n{error}",
-              ]
+            'id' => 'active-form',
+            'options' => [
+                'class' => 'form-horizontal',
+                'enctype' => 'multipart/form-data',
+                'name' => 'brandsfilter',
+            ],
+            'fieldConfig' => [
+                'template' => "{input}\n{label}\n{hint}\n{error}",
+            ]
         ]);
         ?>
 
@@ -58,20 +58,22 @@ $this->registerJs("
 
 <div class="content">
     <div class="categories" style="overflow: hidden">
-        <div>подкатегории категории "<?= $path->name ?>": </div>
+        <div>подкатегории категории "<?= $path->name ?>":</div>
         <?php foreach ($subcategories as $category): ?>
             <div class="category">
                 <div align="center">
                     <?=
                     Html::a(
-                      Html::img('http://dummyimage.com/70x70/fafafa/3ea1ec',
-                        ['alt' => '...', 'class' => 'img-thumbnail', 'id' => $category['category_id']]
-                      ), ['/catalog/category/', 'id' => $category['category_id']]
+                        Html::img('http://dummyimage.com/70x70/fafafa/3ea1ec',
+                            ['alt' => '...', 'class' => 'img-thumbnail', 'id' => $category['category_id']]
+                        ), ['/catalog/category/', 'id' => $category['category_id']]
                     )
                     ?>
                 </div>
-                подкатегория <?= $category['category_id'] ?> - <?= Html::a($category['name'], ['/catalog/category/', 'id' => $category['category_id']]) ?>
-                <br> количество товаров ( <?= $category['quantity_visible'] ?> ) ( <?= $category['quantity_invisible'] ?> )
+                подкатегория <?= $category['category_id'] ?>
+                - <?= Html::a($category['name'], ['/catalog/category/', 'id' => $category['category_id']]) ?>
+                <br> количество товаров ( <?= $category['quantity_visible'] ?> )
+                ( <?= $category['quantity_invisible'] ?> )
             </div>
         <?php endforeach; ?>
     </div>
@@ -80,9 +82,16 @@ $this->registerJs("
 
         <?php foreach ($products as $product): ?>
             <div class="product">
-                1
-                <?//Html::a("<img src=$image alt='...' class='img-thumbnail' style='float: left'>", ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?>
-                <?= Html::img($image, ['alt' => 'pic not found','style' => 'width:150px;height: 100px'])?>
+
+                <?php
+                if (isset($product["product_image_url"])) {
+                    $url = $product["product_image_url"];
+                    $image = "/$url";
+                } else $image = "http://dummyimage.com/150x100/fafafa/3ea1ec";
+                ?>
+
+
+                <?= Html::img($image, ['alt' => 'pic not found', 'style' => 'width:150px;height: 100px']) ?>
                 <div>Название товара:
                     <b> <?= Html::a($product['title'], ['/products', 'id' => $product['product_id']], ['target' => '_blank',]) ?> </b>
                 </div>
@@ -93,19 +102,21 @@ $this->registerJs("
                     <?= Html::encode($product['description']) ?>
                 </div>
                 <div>
-                    цена: <?= Html::encode($product['price']) ?> (специальная цена: <?= Html::encode($product['special_price']) ?>)
+                    цена: <?= Html::encode($product['price']) ?> (специальная
+                    цена: <?= Html::encode($product['special_price']) ?>)
                 </div>
                 <div>
-                    <input type="button" value="Добавить в корзину" id="addproduct" onclick="addproduct(<?= $product['product_id'] ?>)">
+                    <input type="button" value="Добавить в корзину" id="addproduct"
+                           onclick="addproduct(<?= $product['product_id'] ?>)">
                     <?php
                     Modal::begin([
                         'header' => '<h3>Связаться с менеджером</h3>',
                         'toggleButton' => [
                             'label' => 'Купить сейчас',
-                        //'href' => Url::toRoute('/site/index'),
-                        //'href' => Url::toRoute(['/products/index', 'id' => $product['product_id']]),
+                            //'href' => Url::toRoute('/site/index'),
+                            //'href' => Url::toRoute(['/products/index', 'id' => $product['product_id']]),
                         ],
-                      //'view' => ['index', 'id' => $product['product_id']]
+                        //'view' => ['index', 'id' => $product['product_id']]
                     ]);
                     echo $this->context->renderPartial('/site/_contact');
                     echo \Yii::$app->view->renderFile('@app/views/site/_contact.php');

@@ -98,6 +98,7 @@ class CatalogController extends Controller
                 'brands' => $brands,
                 'filtermodel' => $filtermodel,
                 'brands_from_filter' => $brands_from_filter,
+
             ]
         );
     }
