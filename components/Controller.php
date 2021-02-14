@@ -14,7 +14,7 @@ class Controller extends \yii\web\Controller
             return Inflector::camelize($this->id) . ' - Admin panel';
         } else {
            // $title = Titles::findOne(['title_id' => $this->action->uniqueId]);
-            return  Inflector::camelize($this->id) . ' - Иишница';
+            return  Inflector::camelize($this->id) . ' - Site';
         }
     }
 
