@@ -4,24 +4,8 @@ use app\models\Orders;
 use kartik\grid\GridView;
 use yii\bootstrap\Html;
 
-$this->params['breadcrumbs'][] = ['label' => 'Администрирование', 'url' => ['/admin']];
-$this->params['breadcrumbs'][] = ['label' => 'Заказы', 'url' => ['index']];
 
-// TODO: move code to .js file
-$this->registerJs("
-    function multi_delete() {
-        var selIds = $('#grid').yiiGridView('getSelectedRows');
-        $.ajax({
-            type: 'POST',
-            url: 'multiple-delete/',
-            data: {ids: selIds},
-            success: function(data) {
-                if (JSON.parse(data) === 'ok') {
-                    $.pjax.reload({container: '#grid-pjax'});
-                }
-            }
-        });
-    }", \yii\web\View::POS_END);
+
 ?>
 
 <div class="admin-default-index">
@@ -36,13 +20,6 @@ echo GridView::widget([
         ],
         '{toggleData}',
 
-    ],
-    'panel' => [
-        'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> Заказы</h3>',
-        'type' => 'success',
-        'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Добавить заказ', ['add'], ['class' => 'btn btn-success']),
-        'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Сбросить', ['index'], ['class' => 'btn btn-info']) . ' ' .
-            Html::button('<i class="glyphicon glyphicon-trash"></i> Удалить выбранные', ['class' => 'btn btn-warning', 'id' => 'multi_delete', 'onclick' => 'multi_delete()']),
     ],
     'columns' => [
         [
@@ -64,20 +41,15 @@ echo GridView::widget([
         'user_phone_number',
         ['attribute' => 'total_sum', 'label' => 'Зафиксированная<br>сумма', 'encodeLabel' => false],
         'time_ordered',
-        [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view} {edit} {delete}',
-            'buttons' => ['edit' => function ($url, $model, $key) {
-                return Html::a('Edit', $url);
-            }],
-        ],
+
         [
             'filter' => Orders::getOrderStatuses(),
             'attribute' => 'status',
             'label' => 'Статус заказа',
             'format' => 'raw',
             'value' => function ($model, $key, $index, $column) {
-                return Html::tag('span', Html::encode(Orders::getOrderStatus($model['status'])), ['class' => 'label status-' . Orders::getOrderStatus($model['status'], true)]);
+                return Html::tag('span', Html::encode(Orders::getOrderStatus($model['status'])),
+                    ['class' => 'label status-' . Orders::getOrderStatus($model['status'], true)]);
             }
         ],
     ],

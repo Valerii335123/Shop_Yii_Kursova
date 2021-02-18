@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\OrderDetails;
 use Yii;
 use app\components\Controller;
 use app\models\Cart;
 use app\models\Orders;
+use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 
 class CartController extends Controller
@@ -23,7 +25,7 @@ class CartController extends Controller
     {
         if (Yii::$app->user->id) {
             $client_info = (new \yii\db\Query)
-                ->select(['phone_number', 'first_name', 'last_name'])
+                ->select(['phone_number', 'first_name'])
                 ->from('users')
                 ->where(['user_id' => Yii::$app->user->id])
                 ->one();
@@ -46,16 +48,22 @@ class CartController extends Controller
         }
 
         $order = new Orders;
+        $order->user_phone_number = $client_info["phone_number"];
+        $order->entered_name = $client_info["first_name"];
+
         if (Yii::$app->user->id) {
             $order->user_id = Yii::$app->user->id;
         }
         if ($order->load(Yii::$app->request->post()) && $order->validate() && Yii::$app->session->get('productsarray')) {
-            if(!Yii::$app->user->isGuest && $client_info["phone_number"]==null)
-            {
-                $id=Yii::$app->user->id;
-                Yii::$app->db->transaction(function ($db) use ($order,$id) {
+            if (!Yii::$app->user->isGuest &&
+                ($client_info["phone_number"] == null || $client_info["first_name"] == null)) {
+                $id = Yii::$app->user->id;
+                Yii::$app->db->transaction(function ($db) use ($order, $id) {
                     $db->createCommand()
-                        ->update('users', ['phone_number' =>$order->user_phone_number ], "user_id = $id")
+                        ->update('users',
+                            ['phone_number' => $order->user_phone_number,
+                                'first_name' => $order->entered_name
+                            ], "user_id = $id")
                         ->execute();
                 });
             }
@@ -148,6 +156,42 @@ class CartController extends Controller
             $items = ['nok'];
         }
         return $items;
+    }
+
+
+    public function actionOrders()
+    {
+        $query = Orders::find()->
+        with('user')
+            ->where(['user_id' => Yii::$app->user->identity->getId()])
+            ->orderBy(['time_ordered' => SORT_DESC]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'key' => 'order_id',
+        ]);
+
+
+        return $this->render('orders', [
+            'query' => $query,
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionOrderDetail()
+    {
+        if (isset($_POST['expandRowKey'])) {
+            $model = OrderDetails::find()
+                ->where(['order_id' => $_POST['expandRowKey']])
+                ->leftJoin('products', 'products.product_id = order_details.product_id')
+                ->all();
+            return Yii::$app->controller->renderPartial('_expand_view', ['model' => $model, 'id' => $_POST['expandRowKey']]);
+        } else {
+            return '<div class="alert alert-danger">No data found</div>';
+        }
     }
 
 }

@@ -37,15 +37,21 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $auth_block = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-//        $auth_block = [
-//            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-//            'url' => ['/site/logout'],
-//            'linkOptions' => ['data-method' => 'post']
-//        ];
-        $auth_block = ['label' => Yii::$app->user->identity->username, 'items' => [
-            ['label' => 'Admin panel', 'url' => ['/admin/']],
-            ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']],
-        ]];
+        if(Yii::$app->user->identity->getRole()==\app\models\Users::ROLE_ADMIN) {
+            $auth_block = ['label' => Yii::$app->user->identity->username, 'items' => [
+
+                ['label' => 'Admin panel', 'url' => ['/admin/']],
+                ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']],
+            ]];
+        }
+        else
+        {
+            $auth_block = ['label' => Yii::$app->user->identity->username, 'items' => [
+
+                ['label' => 'Мои заказы', 'url' => ['/cart/orders']],
+                ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']],
+            ]];
+        }
     }
 
     $products_in_cart = count(Yii::$app->session->get('productsarray'));
