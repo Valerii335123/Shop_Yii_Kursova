@@ -62,17 +62,17 @@ $this->registerJsFile('/js/cart.js', ['position' => \yii\web\View::POS_END]);
     $form = ActiveForm::begin();
     ?>
 
-    <?php if (\Yii::$app->user->id): ?>
+<!--    --><?php //if (\Yii::$app->user->id): ?>
 
-        <?=
-        $this->render('_authorized_user_form', [
-            'form' => $form,
-            'order' => $order,
-            'client_info' => $client_info,
-        ]);
-        ?>
+<!--        --><?//=
+//        $this->render('_authorized_user_form', [
+//            'form' => $form,
+//            'order' => $order,
+//            'client_info' => $client_info,
+//        ]);
+//        ?>
 
-    <?php else: ?>
+<!--    //--><?php //else: ?>
 
         <?=
         $this->render('_not_authorized_user_form', [
@@ -81,7 +81,7 @@ $this->registerJsFile('/js/cart.js', ['position' => \yii\web\View::POS_END]);
         ]);
         ?>
 
-    <?php endif; ?>
+<!--    --><?php //endif; ?>
 
     <?= $form->field($order, 'status')->hiddenInput(['value' => Orders::UNANSWERED])->label(false) ?>
     <?= $form->field($order, 'total_sum')->hiddenInput(['value' => $total_sum])->label(false) ?>

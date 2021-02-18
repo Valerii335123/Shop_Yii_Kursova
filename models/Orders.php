@@ -49,7 +49,7 @@ class Orders extends \yii\db\ActiveRecord
             [['user_phone_number'], 'string', 'length' => [17, 19]],
             [['entered_name'], 'string', 'length' => [4, 30]],
             ['user_phone_number', 'match', 'pattern' => '[\+38\s\([0-9]{3}\)\s[0-9]{3}-[0-9]{2}-[0-9]{2}]'],
-            [['verifyCode'], 'captcha'],
+
         ];
     }
 
@@ -69,7 +69,7 @@ class Orders extends \yii\db\ActiveRecord
             'time_ordered' => 'Время заказа',
             'client_comment' => 'Комментарий к заказу',
             'manager_comment' => 'Комментарий менеджера',
-            'verifyCode' => 'Проверочный код',
+
         ];
     }
 

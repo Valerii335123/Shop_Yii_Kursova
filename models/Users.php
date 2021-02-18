@@ -26,7 +26,8 @@ class Users extends ActiveRecord implements IdentityInterface
                 'username',
                 'is_active',
                 'role',
-                'password'
+                'password',
+                'phone_number',
                 ], 'safe']
 
         ];

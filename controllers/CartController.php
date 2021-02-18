@@ -50,6 +50,15 @@ class CartController extends Controller
             $order->user_id = Yii::$app->user->id;
         }
         if ($order->load(Yii::$app->request->post()) && $order->validate() && Yii::$app->session->get('productsarray')) {
+            if(!Yii::$app->user->isGuest && $client_info["phone_number"]==null)
+            {
+                $id=Yii::$app->user->id;
+                Yii::$app->db->transaction(function ($db) use ($order,$id) {
+                    $db->createCommand()
+                        ->update('users', ['phone_number' =>$order->user_phone_number ], "user_id = $id")
+                        ->execute();
+                });
+            }
             $res = $order->save();
             Cart::LoadOrderDetailsTable($products);
             Cart::DeleteAllProducts();

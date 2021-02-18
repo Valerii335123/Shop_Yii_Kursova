@@ -207,6 +207,7 @@ class OrdersController extends Controller
                 ->execute();
         });
 
+
         return $this->redirect('/admin/orders/edit/' . $id);
     }
 
@@ -222,6 +223,18 @@ class OrdersController extends Controller
             return '<div class="alert alert-danger">No data found</div>';
         }
     }
+
+    public  function  actionConfirnOrder($id)
+    {
+        Yii::$app->db->transaction(function ($db) use ($id) {
+            $db->createCommand()
+                ->update('orders', ['status' =>1 ], "order_id = $id")
+                ->execute();
+        });
+        return $this->redirect('/admin/orders/view/' . $id);
+    }
+
+
 
     public function actionMultipleDelete()
     {

@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Редактирование за�
 
 <br>
 <?= Html::a('Зафиксировать сумму', ['orders/fix', 'id' => $order->order_id, 'fixed' => $order_info['current_sum'],], ['class' => 'btn btn-success']) ?>
-
+<?= Html::a('Подтвердить заказ', ['orders/confirn-order', 'id' => $order->order_id,], ['class' => 'btn btn-danger']) ?>
 <br><br>
 <div><b>Комментарий заказчика</b></div>
 <div><?= Html::encode($order->client_comment) ?></div>
