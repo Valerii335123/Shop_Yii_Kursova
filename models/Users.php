@@ -38,8 +38,8 @@ class Users extends ActiveRecord implements IdentityInterface
             'user_id' => 'ID автора',
             'username' => 'Имя пользователя',
             'group' => 'Имя пользователя',
-//            'content' => 'Текст новости',
-//            'news_status' => 'Статус новости',
+
+            'is_active'=>"Активность"
         ];
     }
 

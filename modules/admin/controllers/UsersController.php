@@ -15,4 +15,12 @@ class UsersController extends Controller
         return $this->render('index', ['users' => $users]);
     }
 
+    public  function actionUpdate($id)
+    {
+        $users = Users::find(['user_id'=>$id])->one();
+        $users->is_active= !$users->is_active;
+        return $this->redirect('/admin/users/index');
+    }
+
+
 }

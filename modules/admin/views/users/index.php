@@ -31,25 +31,20 @@ $this->params['breadcrumbs'][] = 'Users';
                     'class' => 'yii\grid\ActionColumn',
                     'header' => 'Действия',
                     'headerOptions' => ['width' => '80'],
-                    'template' => '{view} {update} {delete} {link}',
+                    'template' => '{update}',
                     'buttons' => [
-                        'update' => function ($url) {
-                            return Html::a('<span class="glyphicon glyphicon-screenshot"></span>', $url);
+                        'update' => function ($url,$model) {
+                            return Html::a('<span class="glyphicon glyphicon-screenshot"></span>', $url . $model->user_id);
                         },
-                        'link' => function ($url) {
-                            return Html::a('Действие', $url);
-                        },
+
                     ],
                 ],
                 [
                     'attribute'=>'is_active',
-                    'filter'=>array('y'=>'Активно','n'=>'Не активно'),
+                    'filter'=>array('1'=>'Активно','0'=>'Не активно'),
                 ],
             ],
         ]);
 
-        foreach ($users as $k => $user) {
-            echo $user->username.'<br>';
-        }
         ?>
 </div>
