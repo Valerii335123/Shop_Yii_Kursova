@@ -46,7 +46,7 @@ echo GridView::widget([
         ],
         'brand_id',
         'brand_name',
-        'discount',
+
         [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{view} {edit} {delete}',
