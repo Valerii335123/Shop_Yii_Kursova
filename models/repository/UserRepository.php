@@ -3,6 +3,7 @@
 namespace app\models\repository;
 
 
+use app\controllers\SiteController;
 use app\models\Users;
 
 class UserRepository
