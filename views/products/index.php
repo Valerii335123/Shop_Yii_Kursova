@@ -35,12 +35,7 @@ $this->registerJs("
 <div> Бренд:
     <?= Html::encode($product['brand_name']) ?>
 </div>
-<div> SKU:
-    <?= Html::encode($product['sku']) ?>
-</div>
-<div> Артикул:
-    <?= Html::encode($product['article']) ?>
-</div>
+
 <div> Описание:
     <?= Html::encode($product['description']) ?>
 </div>

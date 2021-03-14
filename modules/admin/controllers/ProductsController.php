@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Productstatistiv;
 use Yii;
 use app\components\Controller;
 use app\models\Products;
@@ -41,14 +42,7 @@ class ProductsController extends Controller
             'query' => $query,
             'pagination' => ['pageSize' => 10],
         ]);
-        $dataProvider->sort->attributes['brand.brand_name'] = [
-            'asc' => ['product_brands.brand_name' => SORT_ASC],
-            'desc' => ['product_brands.brand_name' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['category.name'] = [
-            'asc' => ['product_categories_list.name' => SORT_ASC],
-            'desc' => ['product_categories_list.name' => SORT_DESC],
-        ];
+
         return $this->render('statistic', ['dataProvider' => $dataProvider]);
     }
 

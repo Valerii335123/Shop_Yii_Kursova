@@ -68,7 +68,7 @@ $this->registerJs("
                     )
                     ?>
                 </div>
-                подкатегория <?= $category['category_id'] ?>
+                подкатегория
                 - <?= Html::a($category['name'], ['/catalog/category/', 'id' => $category['category_id']]) ?>
                 <br> количество товаров ( <?= $category['quantity_visible'] ?> )
                 ( <?= $category['quantity_invisible'] ?> )
